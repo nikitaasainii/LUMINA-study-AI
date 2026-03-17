@@ -1,26 +1,70 @@
 import streamlit as st
 from agent import run_agent
 
-# ── Page config ──────────────────────────────────────────────────────────────
+# ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Lumina Study AI",
-    page_icon="🌟",
+    page_icon="✨",
     layout="centered"
 )
 
 # ── Styling ───────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    .main { background-color: #0f1117; }
+    /* Hide anchor link icons */
+    .stMarkdown h1 a, .stMarkdown h2 a, .stMarkdown h3 a, .stMarkdown h4 a { display: none; }
+
+    /* White background */
+    .stApp { background-color: #fff0f6; }
+    .main { background-color: #fff0f6; }
+
+    /* Left align everything */
+    .block-container {
+        padding-left: 3rem;
+        padding-right: 3rem;
+        max-width: 860px;
+        margin-left: 0 !important;
+    }
+
+    /* Headings */
+    h1 { color: #ff1493 !important; font-size: 2.4rem !important; }
+    h2 { color: #ff1493 !important; }
+    h3 { color: #ff69b4 !important; }
+    h4 { color: #ffb6c1 !important; }
+
+    /* Body text */
+    p, label, .stMarkdown { color: #1a1a1a !important; }
+
+    /* Input box */
     .stTextInput > div > div > input {
-        background-color: #1e2130;
-        color: white;
-        border: 1px solid #3a3f5c;
+        background-color: #fff0f6;
+        color: #1a1a1a;
+        border: 2px solid #ff69b4;
         border-radius: 10px;
         padding: 12px;
+        font-size: 15px;
+        caret-color: #ff1493;
     }
+
+    /* Selectbox */
+    .stSelectbox > div > div {
+        background-color: #fff0f6 !important;
+        border: 2px solid #ff69b4 !important;
+        color: #1a1a1a !important;
+        border-radius: 10px;
+    }
+
+    /* Number input */
+    .stNumberInput > div > div {
+        background-color: #fff0f6 !important;
+        border: 2px solid #ff69b4 !important;
+        color: #1a1a1a !important;
+        border-radius: 10px;
+    }
+
+    /* Button */
     .stButton > button {
-        background: linear-gradient(135deg, #6e57e0, #a78bfa);
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
         color: white;
         border: none;
         border-radius: 10px;
@@ -31,31 +75,41 @@ st.markdown("""
         transition: opacity 0.2s;
     }
     .stButton > button:hover { opacity: 0.85; }
+
+    
     .result-box {
-        background-color: #1e2130;
-        border: 1px solid #3a3f5c;
+        background-color: #ffffff;
+        border: 1px solid #ff69b4;
         border-radius: 12px;
         padding: 24px;
         margin-top: 20px;
-        color: #e2e8f0;
+        color: #1a1a1a;
         line-height: 1.8;
     }
-    .step-badge {
-        background: #6e57e0;
-        color: white;
-        padding: 2px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        margin-right: 8px;
+
+    /* Divider */
+    hr { border-color: #ffb6c1; }
+
+    /* Expander */
+    .streamlit-expanderHeader {
+        background-color: #fff0f6 !important;
+        color: #ff1493 !important;
+        border: 1px solid #ff69b4 !important;
+        border-radius: 8px !important;
     }
-    h1 { color: #a78bfa !important; }
-    h3 { color: #cbd5e1 !important; }
+
+
+    /* Footer */
+    .footer {
+        color: #ffb6c1;
+        font-size: 13px;
+        margin-top: 40px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.markdown("# 🌟 Lumina Study AI")
+st.markdown("# Lumina Study AI")
 st.markdown("#### Your Agentic Learning Assistant")
 st.markdown("---")
 
@@ -64,14 +118,14 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # ── Input ─────────────────────────────────────────────────────────────────────
-st.markdown("### 📚 What do you want to study?")
+st.markdown("### What do you want to study?")
 topic = st.text_input(
     label="topic",
     placeholder="e.g. Quantum Computing, French Revolution, Machine Learning...",
     label_visibility="collapsed"
 )
 
-col1, col2 = st.columns([3, 1])
+col1, col2, col3 = st.columns([3, 1, 1])
 with col1:
     depth = st.selectbox(
         "Depth",
@@ -79,58 +133,50 @@ with col1:
         label_visibility="visible"
     )
 with col2:
-    hours = st.number_input("Study hours available", min_value=1, max_value=20, value=3)
+    time_amount = st.number_input("Time available", min_value=1, max_value=52, value=3)
+with col3:
+    time_unit = st.selectbox("Unit", ["Hours", "Days", "Weeks"], label_visibility="visible")
 
-generate = st.button("✨ Generate My Study Plan")
+hours = time_amount * (1 if time_unit == "Hours" else 8 if time_unit == "Days" else 40)
+
+generate = st.button("Generate My Study Plan")
 
 # ── Agent run ─────────────────────────────────────────────────────────────────
 if generate:
     if not topic.strip():
         st.warning("Please enter a topic first!")
     else:
-        with st.spinner("🤖 Agent is working... searching, thinking, planning..."):
-
-            # Show agentic steps live
+        with st.spinner("Working on your study plan..."):
             status = st.empty()
 
-            status.markdown("**🔍 Step 1:** Searching for resources on *" + topic + "*...")
+            status.markdown("**Step 1:** Searching for resources on *" + topic + "*...")
             import time; time.sleep(1)
 
-            status.markdown("**🧠 Step 2:** Analysing and filtering results...")
+            status.markdown("**Step 2:** Analysing and filtering results...")
             time.sleep(1)
 
-            status.markdown("**📝 Step 3:** Generating your personalised study plan...")
+            status.markdown("**Step 3:** Generating your personalised study plan...")
 
             result = run_agent(topic, depth, hours)
             status.empty()
 
         # ── Display result ────────────────────────────────────────────────────
         st.markdown("---")
-        st.markdown("### 🎯 Your Personalised Study Plan")
-        st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
-
-        # Save to history
+        st.markdown("### Your Personalised Study Plan")
+        st.markdown(result)
         st.session_state.history.append({"topic": topic, "plan": result})
+        
 
-        # Download button
-        st.download_button(
-            label="📥 Download Study Plan",
-            data=result,
-            file_name=f"{topic.replace(' ', '_')}_study_plan.txt",
-            mime="text/plain"
-        )
-
-# ── History sidebar ───────────────────────────────────────────────────────────
+# ── History ───────────────────────────────────────────────────────────────────
 if st.session_state.history:
     st.markdown("---")
-    st.markdown("### 🕘 Previous Study Plans")
-    for i, item in enumerate(reversed(st.session_state.history[-5:])):
-        with st.expander(f"📖 {item['topic']}"):
+    st.markdown("### Previous Study Plans")
+    for item in reversed(st.session_state.history[-5:]):
+        with st.expander(f"{item['topic']}"):
             st.markdown(item["plan"], unsafe_allow_html=True)
-
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("---")
 st.markdown(
-    "<center><small>Lumina Study AI · Powered by Gemini + Agentic Workflow</small></center>",
+    '<p class="footer">Lumina Study AI — Powered by GROQ</p>',
     unsafe_allow_html=True
 )

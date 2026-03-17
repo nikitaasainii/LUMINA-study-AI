@@ -16,7 +16,7 @@ import urllib.parse
 import json
 import requests
 from dotenv import load_dotenv
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 
 load_dotenv()
 
@@ -56,25 +56,17 @@ def format_search_context(results: list) -> str:
 
 
 # ── Call Gemini via REST API directly (bypasses library DNS issue) ────────────
-def call_gemini(prompt: str) -> str:
-    api_key = os.getenv("GEMINI_API_KEY")
+def call_groq(prompt: str) -> str:
+    from groq import Groq
+    api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        raise ValueError("GEMINI_API_KEY not found in .env file.")
-
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
-
-    payload = {
-        "contents": [
-            {
-                "parts": [{"text": prompt}]
-            }
-        ]
-    }
-
-    response = requests.post(url, json=payload, timeout=60)
-    response.raise_for_status()
-    data = response.json()
-    return data["candidates"][0]["content"]["parts"][0]["text"]
+        raise ValueError("GROQ_API_KEY not found.")
+    client = Groq(api_key=api_key)
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content
 
 
 # ── Main Agent ────────────────────────────────────────────────────────────────
@@ -134,6 +126,6 @@ Format everything neatly in Markdown.
 """
 
     try:
-        return call_gemini(prompt)
+        return call_groq(prompt)
     except Exception as e:
-        return f"⚠️ Error calling Gemini API: {str(e)}"
+          return f"⚠️ Error calling Groq API: {str(e)}"
