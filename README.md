@@ -10,8 +10,8 @@ You type a topic → the AI agent searches the web → reads the results → gen
 
 ## Setup (takes ~5 minutes)
 
-### Step 1 — Get your free Gemini API key
-1. Go to https://aistudio.google.com
+### Step 1 — Get your free Groq API key
+1. Go to https://console.groq.com
 2. Sign in with Google
 3. Click "Get API Key" → "Create API Key"
 4. Copy the key
@@ -19,7 +19,7 @@ You type a topic → the AI agent searches the web → reads the results → gen
 ### Step 2 — Add your key
 Open the `.env` file and replace `paste_your_key_here` with your actual key:
 ```
-GEMINI_API_KEY=AIzaSy...your_key_here
+GROQ_API_KEY=AIzaSy...your_key_here
 ```
 
 ### Step 3 — Install dependencies
@@ -54,7 +54,7 @@ lumina-study-ai/
 | Layer | Technology |
 |-------|-----------|
 | Frontend | Streamlit |
-| AI Brain | Google Gemini 1.5 Flash (free) |
+| AI Brain | GROQ API (free) |
 | Web Search | DuckDuckGo Search API (free) |
 | Encyclopedia | Wikipedia API (free) |
 | Deployment | Streamlit Community Cloud (free) |
@@ -65,7 +65,7 @@ lumina-study-ai/
 1. Push this folder to GitHub
 2. Go to https://share.streamlit.io
 3. Connect your GitHub repo
-4. Add your GEMINI_API_KEY in the "Secrets" section
+4. Add your GROQ_API_KEY in the "Secrets" section
 5. Click Deploy → you get a live public URL ✅
 
 ---
