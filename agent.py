@@ -1,5 +1,3 @@
-
-
 """
 agent.py — The agentic brain of Lumina Study AI
 
@@ -7,7 +5,7 @@ Flow (ReAct loop):
   1. PLAN   → decide what to search for
   2. ACT    → search DuckDuckGo + Wikipedia
   3. OBSERVE → read and filter results
-  4. GENERATE → call Gemini to produce study plan
+  4. GENERATE → call Groq/LLM to produce structured timetable study plan
 """
 
 import os
@@ -55,7 +53,7 @@ def format_search_context(results: list) -> str:
     return "\n\n".join(lines)
 
 
-# ── Call Gemini via REST API directly (bypasses library DNS issue) ────────────
+# ── Call Groq ─────────────────────────────────────────────────────────────────
 def call_groq(prompt: str) -> str:
     from groq import Groq
     api_key = os.getenv("GROQ_API_KEY")
@@ -99,33 +97,90 @@ def run_agent(topic: str, depth: str, hours: int) -> str:
     }
     depth_instruction = depth_map.get(depth, "beginner-friendly")
 
+    # Calculate session breakdown
+    if hours <= 3:
+        session_label = "hours"
+        sessions = hours
+        session_duration = "1 hour"
+    elif hours <= 24:
+        sessions = min(hours, 8)
+        session_label = "sessions"
+        session_duration = f"{round(hours/sessions, 1)} hours"
+    else:
+        sessions = min(round(hours / 8), 14)
+        session_label = "days"
+        session_duration = f"{round(hours/sessions)} hours/day"
+
     prompt = f"""
 You are Lumina Study AI, an expert academic learning assistant.
 
 A student wants to learn about: **{topic}**
 Depth level: {depth} ({depth_instruction})
-Available study time: {hours} hours
+Total available study time: {hours} hours
 
 You have gathered the following real-time information from the web:
-
 ---
 {full_context}
 ---
 
-Using this information, generate a comprehensive, personalised study plan in Markdown format with:
+Generate a STRUCTURED TIMETABLE STUDY PLAN in clean Markdown. Follow this EXACT format:
 
-1. **Topic Overview** — What is {topic} and why does it matter? (3-4 sentences)
-2. **Key Concepts to Master** — List the 5-7 most important concepts to understand
-3. **Recommended Learning Path** — Step-by-step sequence broken into the {hours} hours available
-4. **Best Free Resources** — Specific websites, YouTube channels, or tools (use the search results)
-5. **Quick Reference** — 3-5 bullet points the student should memorise
-6. **Knowledge Check** — 3 questions the student should be able to answer after studying
+---
 
-Make it motivating, clear, and actionable. Use emojis sparingly to make it readable.
-Format everything neatly in Markdown.
+## Overview
+Write 3-4 sentences about what {topic} is and why it matters. Keep it motivating.
+
+---
+
+## Key Concepts
+List exactly 5-7 key concepts as bullet points. One line each. Be specific.
+
+---
+
+## Study Timetable
+
+Create a timetable with exactly {sessions} sessions totalling {hours} hours.
+For EACH session use this exact format:
+
+### Session N — [Session Title]
+**Time Block:** [e.g. Hour 1-2 / Day 1 / Week 1]
+**Duration:** [e.g. 2 hours]
+**Focus:** [One line describing the main goal of this session]
+
+**What to study:**
+- [Specific topic or subtopic]
+- [Specific topic or subtopic]
+- [Specific topic or subtopic]
+
+**Resource:** [One specific free resource from search results — name and URL]
+
+**Outcome:** By the end of this session you will be able to [specific skill or knowledge]
+
+---
+
+Repeat for all {sessions} sessions. Make each session build on the previous one logically.
+
+---
+
+## Quick Reference
+5 bullet points — the most important facts to memorise about {topic}.
+
+---
+
+## Knowledge Check
+3 questions the student should answer after completing the full plan. Number them 1, 2, 3.
+
+---
+
+RULES:
+- Use ONLY the format above. No extra sections.
+- Keep language clear and direct — no filler phrases.
+- Each session must have a distinct, meaningful focus.
+- Resources must be real URLs from the search results where possible.
+- Do not use emojis.
 """
 
     try:
         return call_groq(prompt)
     except Exception as e:
-          return f"⚠️ Error calling Groq API: {str(e)}"
+        return "Something went wrong. Please try again in a moment."
