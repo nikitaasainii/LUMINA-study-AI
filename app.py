@@ -363,7 +363,7 @@ st.markdown("""
     <h1 class="hero-title">Study smarter,<br>not <span>harder.</span></h1>
     <p class="hero-subtitle">
         Lumina is an AI agent that searches the web in real time and builds 
-        you a complete, personalised study plan — in seconds.
+        you a complete, personalised study plan, in seconds.
     </p>
     <div class="stats-row">
         <div class="stat-item">
@@ -391,7 +391,7 @@ st.markdown('<div class="content-area">', unsafe_allow_html=True)
 
 st.markdown("""
 <p class="input-section-title">Build your study plan</p>
-<p class="input-section-sub">Tell Lumina what you want to learn — it handles the rest.</p>
+<p class="input-section-sub">Tell Lumina what you want to learn,it handles the rest.</p>
 """, unsafe_allow_html=True)
 
 topic = st.text_input(
