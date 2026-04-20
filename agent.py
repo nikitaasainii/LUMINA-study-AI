@@ -161,6 +161,16 @@ For EACH session use this exact format:
 Repeat for all {sessions} sessions. Make each session build on the previous one logically.
 
 ---
+---
+
+## Study Summary Table
+
+Create a markdown table with exactly these columns:
+| Session | Focus Area | Duration | Key Topic | Difficulty |
+Fill one row per session. Difficulty should be one of: Beginner / Intermediate / Advanced.
+Keep each cell short — max 5 words.
+
+---
 
 ## Quick Reference
 5 bullet points — the most important facts to memorise about {topic}.
