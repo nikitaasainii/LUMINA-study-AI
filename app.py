@@ -16,7 +16,9 @@ st.markdown("""
 
 /* ── Reset & Base ── */
 * { box-sizing: border-box; }
-.stApp { background-color: #fdf6f9; }
+.stApp { 
+    background-color: #0f050a; 
+}
 .main .block-container {
     padding: 0 !important;
     max-width: 100% !important;
@@ -27,11 +29,11 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
 
 /* ── Hero Section ── */
 .hero {
-    background: linear-gradient(135deg, #fff0f6 0%, #ffe4ef 40%, #ffd6e8 100%);
+    background: linear-gradient(135deg, #1a0a12 0%, #2d1320 60%, #4a1f35 100%);
     padding: 80px 80px 60px 80px;
     position: relative;
     overflow: hidden;
-    border-bottom: 1px solid #ffc8dc;
+    border-bottom: 1px solid #4a1f35;
 }
 
 .hero::before {
@@ -41,7 +43,7 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
     right: -100px;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(255,105,180,0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,105,180,0.1) 0%, transparent 70%);
     border-radius: 50%;
 }
 
@@ -52,15 +54,15 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
     left: 30%;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(255,20,147,0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,20,147,0.05) 0%, transparent 70%);
     border-radius: 50%;
 }
 
 .hero-badge {
     display: inline-block;
-    background: rgba(255,20,147,0.1);
-    color: #ff1493;
-    border: 1px solid rgba(255,20,147,0.2);
+    background: rgba(255,20,147,0.15);
+    color: #ff69b4;
+    border: 1px solid rgba(255,20,147,0.3);
     padding: 6px 16px;
     border-radius: 20px;
     font-family: 'DM Sans', sans-serif;
@@ -74,7 +76,7 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
     font-family: 'Playfair Display', serif;
     font-size: 62px;
     font-weight: 900;
-    color: #1a0a12;
+    color: #ffffff;
     line-height: 1.1;
     margin: 0 0 20px 0;
     position: relative;
@@ -88,7 +90,7 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
 .hero-subtitle {
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
-    color: #6b3a52;
+    color: #c4a0b0;
     font-weight: 300;
     line-height: 1.6;
     max-width: 520px;
@@ -130,7 +132,7 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
 .input-section-title {
     font-family: 'Playfair Display', serif;
     font-size: 28px;
-    color: #1a0a12;
+    color: #ffffff;
     margin-bottom: 8px;
 }
 
@@ -143,39 +145,39 @@ h1 a, h2 a, h3 a, h4 a { display: none !important; }
 
 /* Override Streamlit inputs */
 .stTextInput > div > div > input {
-    background: #ffffff !important;
-    border: 1.5px solid #ffc8dc !important;
+    background: #1a0a12 !important;
+    border: 1.5px solid #4a1f35 !important;
     border-radius: 12px !important;
     padding: 14px 18px !important;
     font-family: 'DM Sans', sans-serif !important;
     font-size: 15px !important;
-    color: #1a0a12 !important;
+    color: #ffffff !important;
     caret-color: #ff1493 !important;
     transition: border-color 0.2s !important;
 }
 
 .stTextInput > div > div > input:focus {
     border-color: #ff1493 !important;
-    box-shadow: 0 0 0 3px rgba(255,20,147,0.08) !important;
+    box-shadow: 0 0 0 3px rgba(255,20,147,0.15) !important;
 }
 
 .stTextInput > div > div > input::placeholder {
-    color: #c4a0b0 !important;
+    color: #6b3a52 !important;
 }
 
 .stSelectbox > div > div {
-    background: #ffffff !important;
-    border: 1.5px solid #ffc8dc !important;
+    background: #1a0a12 !important;
+    border: 1.5px solid #4a1f35 !important;
     border-radius: 12px !important;
     font-family: 'DM Sans', sans-serif !important;
-    color: #1a0a12 !important;
+    color: #ffffff !important;
 }
 
 .stNumberInput > div > div {
-    background: #ffffff !important;
-    border: 1.5px solid #ffc8dc !important;
+    background: #1a0a12 !important;
+    border: 1.5px solid #4a1f35 !important;
     border-radius: 12px !important;
-    color: #1a0a12 !important;
+    color: #ffffff !important;
 }
 
 /* Labels */
@@ -183,7 +185,7 @@ label, .stSelectbox label, .stNumberInput label {
     font-family: 'DM Sans', sans-serif !important;
     font-size: 13px !important;
     font-weight: 600 !important;
-    color: #6b3a52 !important;
+    color: #c4a0b0 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.8px !important;
     margin-bottom: 6px !important;
@@ -214,7 +216,7 @@ label, .stSelectbox label, .stNumberInput label {
 .result-header {
     font-family: 'Playfair Display', serif;
     font-size: 32px;
-    color: #1a0a12;
+    color: #ffffff;
     margin: 48px 0 6px 0;
 }
 
@@ -238,8 +240,8 @@ label, .stSelectbox label, .stNumberInput label {
 }
 
 .time-card {
-    background: #ffffff;
-    border: 1px solid #ffc8dc;
+    background: #1a0a12;
+    border: 1px solid #4a1f35;
     border-left: 4px solid #ff1493;
     border-radius: 12px;
     padding: 20px 24px;
@@ -266,31 +268,31 @@ label, .stSelectbox label, .stNumberInput label {
 .time-card-title {
     font-size: 16px;
     font-weight: 600;
-    color: #1a0a12;
+    color: #ffffff;
 }
 
 .time-card-body {
     font-size: 14px;
-    color: #6b3a52;
+    color: #c4a0b0;
     line-height: 1.7;
 }
 
 /* ── Divider ── */
-hr { border-color: #ffc8dc !important; margin: 32px 0 !important; }
+hr { border-color: #4a1f35 !important; margin: 32px 0 !important; }
 
 /* ── Expander ── */
 .streamlit-expanderHeader {
-    background: #fff0f6 !important;
-    border: 1px solid #ffc8dc !important;
+    background: #1a0a12 !important;
+    border: 1px solid #4a1f35 !important;
     border-radius: 10px !important;
     font-family: 'DM Sans', sans-serif !important;
-    color: #ff1493 !important;
+    color: #ff69b4 !important;
     font-weight: 600 !important;
 }
 
 /* ── Download Button ── */
 .stDownloadButton > button {
-    background: #ffffff !important;
+    background: transparent !important;
     color: #ff1493 !important;
     border: 1.5px solid #ff1493 !important;
     border-radius: 12px !important;
@@ -309,11 +311,11 @@ hr { border-color: #ffc8dc !important; margin: 32px 0 !important; }
 .footer {
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    color: #c4a0b0;
+    color: #6b3a52;
     text-align: center;
     padding: 32px 0;
     margin-top: 40px;
-    border-top: 1px solid #ffc8dc;
+    border-top: 1px solid #4a1f35;
 }
 
 /* ── Steps indicator ── */
@@ -325,8 +327,8 @@ hr { border-color: #ffc8dc !important; margin: 32px 0 !important; }
 }
 
 .step-pill {
-    background: #fff0f6;
-    border: 1px solid #ffc8dc;
+    background: #1a0a12;
+    border: 1px solid #4a1f35;
     color: #9b6b82;
     padding: 6px 14px;
     border-radius: 20px;
@@ -344,12 +346,12 @@ hr { border-color: #ffc8dc !important; margin: 32px 0 !important; }
 /* General text */
 p, li, .stMarkdown p { 
     font-family: 'DM Sans', sans-serif !important;
-    color: #3d1a2e !important;
+    color: #e0d0d8 !important;
 }
 
 h1, h2, h3, h4 {
     font-family: 'Playfair Display', serif !important;
-    color: #1a0a12 !important;
+    color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
