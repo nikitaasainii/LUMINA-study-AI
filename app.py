@@ -337,6 +337,46 @@ hr { border-color: #4a1f35 !important; margin: 32px 0 !important; }
     font-weight: 500;
 }
 
+/* ── Table Styling ── */
+thead tr th {
+    background: linear-gradient(135deg, #ff69b4, #ff1493) !important;
+    color: white !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    padding: 14px 16px !important;
+    border: none !important;
+}
+
+tbody tr:nth-child(even) td {
+    background: #fff0f6 !important;
+}
+
+tbody tr:nth-child(odd) td {
+    background: #ffffff !important;
+}
+
+tbody tr:hover td {
+    background: #ffe4ef !important;
+}
+
+tbody tr td {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 14px !important;
+    color: #1a0a12 !important;
+    padding: 12px 16px !important;
+    border-color: #ffc8dc !important;
+}
+
+table {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #ffc8dc !important;
+    width: 100% !important;
+}
+
 .step-pill.active {
     background: linear-gradient(135deg, #ff69b4, #ff1493);
     border-color: #ff1493;
