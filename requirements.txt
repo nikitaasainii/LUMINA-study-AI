@@ -3,3 +3,4 @@ groq
 duckduckgo-search
 python-dotenv
 requests
+reportlab
